@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "65055241120",
+    "firebase_url": "https://lonkin-f00a8.firebaseio.com",
+    "project_id": "lonkin-f00a8",
+    "storage_bucket": "lonkin-f00a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:65055241120:android:887ee2df2220e44b5e2ac5",
+        "android_client_info": {
+          "package_name": "com.example.lonkin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "65055241120-8eoircg3d8ovp25l67g5eu81ricfn7ad.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCyntrvzvCxACLU5r3KVss5jA6ucRaObPI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "65055241120-8eoircg3d8ovp25l67g5eu81ricfn7ad.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
