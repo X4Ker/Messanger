@@ -14,6 +14,14 @@
         android:layout_height="match_parent"
         tools:context="multiplelay.android.stanislav.com.cloudtasks.EmailPasswordActivity">
 
+        <EditText android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:id="@+id/et_username"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="100dp"
+            android:hint="NickName"
+            android:textSize="30dp"/>
+
 
         <EditText android:layout_width="250dp"
             android:layout_height="50dp"

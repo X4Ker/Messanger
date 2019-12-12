@@ -13,10 +13,12 @@ import java.util.ArrayList;
 public class DataAdapter extends RecyclerView.Adapter<ViewHolder> {
 
     ArrayList<String> messages;
+    ArrayList<String> _usr;
 
     LayoutInflater inflater;
 
-    public DataAdapter(Context context, ArrayList<String> messages) {
+    public DataAdapter(Context context, ArrayList<String> messages, ArrayList<String> _usr) {
+        this._usr = _usr;
         this.messages = messages;
         this.inflater = LayoutInflater.from(context);
     }
@@ -34,6 +36,8 @@ public class DataAdapter extends RecyclerView.Adapter<ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         String msg = messages.get(position);
+        String usr = _usr.get(position);
+        holder.messageUser.setText(usr);
         holder.message.setText(msg);
 
     }

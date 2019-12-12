@@ -1,2 +1,2 @@
-include ':app'
+include ':app', ':bcprov-jdk15on-154'
 rootProject.name='LonkIn'

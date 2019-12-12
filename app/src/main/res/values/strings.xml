@@ -2,4 +2,5 @@
     <string name="app_name">LonkIn</string>
     <string name="edit_text_hint">Enter message</string>
     <string name="send_button_name">Send</string>
+    <string name="dialog_name">Dialog Name</string>
 </resources>
