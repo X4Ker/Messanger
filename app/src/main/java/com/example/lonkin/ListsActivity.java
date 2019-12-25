@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,7 +21,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 
 public class ListsActivity extends AppCompatActivity {
@@ -29,6 +36,8 @@ public class ListsActivity extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference("dialogs");
+    DatabaseReference myRefk = database.getReference("pubKeys");
+    DatabaseReference myRefs = database.getReference("status");
 
     ArrayList<String> dialogs = new ArrayList();
     ArrayAdapter<String> adapter;
@@ -100,12 +109,34 @@ public class ListsActivity extends AppCompatActivity {
 
     }
 
-    public void add(View view){
+    public void add(View view) throws NoSuchAlgorithmException, IOException, InvalidKeySpecException {
         EditText phoneEditText = (EditText) findViewById(R.id.phone);
         String dialog = phoneEditText.getText().toString();
         if(!dialog.isEmpty()){
+            myRefs.child(dialog).setValue("False");
+            Assymetric a = new Assymetric();
+            a.generateKey();
+            PublicKey publicKey = a.restorePublic();
+            PrivateKey privateKey = a.restorePrivate();
+            String pk = publicKey.toString();
+            privateKey.toString();
+            myRefk.child(dialog).setValue(pk);
             adapter.add(dialog);
             myRef.child(dialog).setValue(dialog);
+            myRefk.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    for(DataSnapshot child : dataSnapshot.getChildren() ){
+                        String key;
+                        key = child.getKey();
+
+                        Toast.makeText(getApplicationContext(), child.getValue().toString(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) { }
+            });
           //  adapter.notifyDataSetChanged();
 
         }

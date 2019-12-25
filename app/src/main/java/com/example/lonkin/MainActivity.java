@@ -19,15 +19,25 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+
 public class MainActivity extends AppCompatActivity {
+
+    private SecretKey secretKey;
 
     private static int MAX_MESSAGE_LENGTH = 150;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef;
+    DatabaseReference myRefs = database.getReference("status");
+    DatabaseReference myRefk = database.getReference("pubKeys");
 
     EditText mEditTextMessage;
     Button mSendButton;
@@ -35,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
     ArrayList<String> messages = new ArrayList<>();
     ArrayList<String> _usr = new ArrayList<>();
+
+    String s;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +66,37 @@ public class MainActivity extends AppCompatActivity {
         }
         final String user = dialogname.substring(0, c);
 
+      //  final String s;
+
+        myRefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                s = dataSnapshot.child(user).getValue(String.class);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) { }
+        });
+
+        if (s == "False"){
+
+            myRefk.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    s = dataSnapshot.child(user).getValue(String.class);
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) { }
+            });
+
+        } else if(s == "True"){
+
+        }
+
         myRef = database.getReference("chats").child(dialogname.substring(c + 1, dialogname.length() + 0));
+
+
 
 
         mEditTextMessage = findViewById(R.id.message_input);
@@ -78,6 +120,12 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Message Too Long!", Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+
+                //Symmetric symmetric = new Symmetric(SecretKey);
+
+               // byte[] encryptedMessage = symmetric.makeAes(msg.getBytes(), Cipher.ENCRYPT_MODE);
+
 
                 myRef.push().setValue(msg);
                 mEditTextMessage.setText("");
